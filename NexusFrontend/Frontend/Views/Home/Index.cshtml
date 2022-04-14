@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+
+}
+
+<h2>Listado de libros</h2>
+
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage" role="alert">
+        @TempData["Success"]
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</p>
+
+}
+@if (TempData["Error"] != null)
+{
+    <p class="alert alert-danger" id="errorMessage" role="alert">
+        @TempData["Error"]
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</p>
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table-responsive cell-border table-hover" style="width: 100%" id="tabla">
+            <thead>
+                <tr>
+                    <th>titulo</th>
+                    <th>fecha</th>
+                    <th>genero</th>
+                    <th>paginas</th>
+                    <th>autor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var libro in Model)
+                {
+                    <tr>
+
+                        <td>@libro.titulo</td>
+                        <td>@libro.fecha</td>
+                        <td>@libro.genero</td>
+                        <td>@libro.paginas</td>
+                        <td>@libro.autor.nombre</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tabla').DataTable();
+        });
+    </script>
+}

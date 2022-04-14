@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registrar libro</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.AntiForgeryToken()
+        <form action="@Url.Action("Create")" method="post" id="formulario">
+            <label>titulo *</label>
+            <input type="text" class="form-control" name="titulo" id="titulo" value=""  />
+            <label>Fecha *</label>
+            <input type="date" class="form-control" name="fecha" id="fecha" value="" />
+            <label>Genero *</label>
+            <input type="text" class="form-control" name="genero" id="genero" value=""  />
+            <label>Paginas *</label>
+            <input type="number" class="form-control" name="paginas" id="paginas" value=""  min="1" max="300"/>
+            <label>Autor *</label>
+            <select class="form-control" name="id_autor" style="margin-bottom: 20px">
+                @foreach (var autor in Model)
+                {
+                    <option value="@autor.id">@autor.nombre</option>
+                }
+
+            </select>
+            <div >
+                <input type="submit" name="name" value="Guardar libro" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("formulario").addEventListener('submit', validarFormulario);
+        });
+
+        function validarFormulario(evento) {
+            evento.preventDefault();
+            var titulo = document.getElementById('titulo').value;
+            var fecha = document.getElementById('fecha').value;
+            var genero = document.getElementById('genero').value;
+            var paginas = document.getElementById('paginas').value;
+
+            if (titulo.length == 0 || fecha.length == 0 || genero.length == 0 || paginas.length == 0 ) {
+                swal("Todos los campos son obligatorios!", "", "error");
+                return;
+            }
+           
+            this.submit();
+        }
+    </script> 
+   }
